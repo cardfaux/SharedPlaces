@@ -12,7 +12,9 @@ export const SingleUserItem = styled.li`
 	.user-item:hover h2,
 	.user-item:active h2,
 	.user-item:hover h3,
-	.user-item:active h3 {
+	.user-item:active h3,
+	.user-item:active h4,
+	.user-item:active h4 {
 		color: ${Black};
 	}
 `;

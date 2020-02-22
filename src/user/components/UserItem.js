@@ -19,8 +19,10 @@ const UserItem = (props) => {
 					</AvatarDiv>
 					<UserInfoDiv>
 						<h2>{props.name}</h2>
+						<h3>From: {props.location}</h3>
 						<h3>
-							{props.placeCount} {props.placeCount === 1 ? 'Place' : 'Places'}
+							Shared: {props.placeCount}{' '}
+							{props.placeCount === 1 ? 'Place' : 'Places'}
 						</h3>
 					</UserInfoDiv>
 				</UserPlacesLink>
