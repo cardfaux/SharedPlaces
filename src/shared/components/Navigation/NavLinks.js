@@ -14,6 +14,11 @@ const NavLinks = (props) => {
 					ALL USERS
 				</NavLink>
 			</ListItem>
+			<ListItem>
+				<NavLink to='/posts' exact>
+					ALL POSTS
+				</NavLink>
+			</ListItem>
 			{auth.isLoggedIn && (
 				<ListItem>
 					<NavLink to='/u1/places'>MY PLACES</NavLink>
