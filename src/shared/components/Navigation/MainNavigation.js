@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useSpring, animated } from 'react-spring';
 
 import MainHeader from './MainHeader';
 import NavLinks from './NavLinks';
@@ -8,6 +9,15 @@ import Backdrop from '../UIElements/Backdrop';
 import { Hamburger, Title, Nav, DrawerNav } from './MainNavigation.styles.js';
 
 const MainNavigation = (props) => {
+	const fade = useSpring({
+		from: {
+			opacity: 0
+		},
+		to: {
+			opacity: 1
+		}
+	});
+
 	const [drawerIsOpen, setDrawerIsOpen] = useState(false);
 
 	const openDrawerHandler = () => {
@@ -29,9 +39,9 @@ const MainNavigation = (props) => {
 
 			<MainHeader>
 				<Hamburger onClick={openDrawerHandler}>
-					<span />
-					<span />
-					<span />
+					<animated.span style={fade} />
+					<animated.span style={fade} />
+					<animated.span style={fade} />
 				</Hamburger>
 				<Title>
 					<Link to='/'>SharedPlaces</Link>
