@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
 
+import { AuthContext } from '.././../shared/context/auth-context';
 import Button from '../../shared/components/FormElements/Button';
 import {
 	StyledCard,
@@ -30,8 +31,9 @@ const PostItem = (props) => {
 
 		return text.substr(0, maxLength) + '...';
 	};
-
+	const auth = useContext(AuthContext);
 	const postId = useParams().postId;
+	const userId = useParams().userId;
 
 	return (
 		<React.Fragment>
@@ -54,10 +56,20 @@ const PostItem = (props) => {
 						</div>
 						<StyledFooter>
 							{postId ? (
-								<Button to='/posts'>All Posts</Button>
+								<Button inverse to='/posts'>
+									All Posts
+								</Button>
 							) : (
-								<Button to={`/posts/${props.id}`} inverse>
+								<Button to={`/posts/${props.id}/${props.creatorId}`} inverse>
 									View Post
+								</Button>
+							)}
+							{auth.isLoggedIn && userId && (
+								<Button to={`/posts/${props.id}`}>EDIT</Button>
+							)}
+							{auth.isLoggedIn && userId && (
+								<Button danger to={`/posts/${props.id}`}>
+									Delete
 								</Button>
 							)}
 						</StyledFooter>
