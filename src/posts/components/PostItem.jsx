@@ -1,4 +1,5 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
 
 import Button from '../../shared/components/FormElements/Button';
@@ -30,6 +31,8 @@ const PostItem = (props) => {
 		return text.substr(0, maxLength) + '...';
 	};
 
+	const postId = useParams().postId;
+
 	return (
 		<React.Fragment>
 			<animated.div style={fade}>
@@ -40,15 +43,23 @@ const PostItem = (props) => {
 						</header>
 						<StyledDate>{props.postedDate}</StyledDate>
 						<div>
-							<h4>{shortText(props.post, 300)}</h4>
+							{postId ? (
+								<h4>{props.post}</h4>
+							) : (
+								<h4>{shortText(props.post, 300)}</h4>
+							)}
 							<h4>
 								<span>Posted By:</span> {props.name}
 							</h4>
 						</div>
 						<StyledFooter>
-							<Button to={`/posts/${props.id}`} inverse>
-								View Post
-							</Button>
+							{postId ? (
+								<Button to='/posts'>All Posts</Button>
+							) : (
+								<Button to={`/posts/${props.id}`} inverse>
+									View Post
+								</Button>
+							)}
 						</StyledFooter>
 					</StyledCard>
 				</StyledList>

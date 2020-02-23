@@ -2,7 +2,7 @@ import React from 'react';
 
 import PostsList from '../components/PostsList';
 
-const DUMMY_POSTS = [
+export const DUMMY_POSTS = [
 	{
 		id: '1937',
 		title: 'First Test Post',
