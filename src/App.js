@@ -13,6 +13,8 @@ import UserPlaces from './places/pages/UserPlaces';
 import UpdatePlace from './places/pages/UpdatePlace';
 import UsersPosts from './posts/pages/UsersPosts';
 import UserPost from './posts/pages/UserPost';
+import NewPost from './posts/pages/NewPost';
+import UpdatePost from './posts/pages/UpdatePost';
 import Auth from './user/pages/Auth';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import { AuthContext } from './shared/context/auth-context';
@@ -49,8 +51,14 @@ const App = () => {
 				<Route path='/places/new' exact>
 					<NewPlace />
 				</Route>
+				<Route path='/posts/new' exact>
+					<NewPost />
+				</Route>
 				<Route path='/places/:placeId'>
 					<UpdatePlace />
+				</Route>
+				<Route path='/posts/:postId'>
+					<UpdatePost />
 				</Route>
 				<Redirect to='/' />
 			</Switch>
