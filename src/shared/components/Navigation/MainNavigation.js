@@ -43,9 +43,11 @@ const MainNavigation = (props) => {
 					<animated.span style={fade} />
 					<animated.span style={fade} />
 				</Hamburger>
-				<Title>
-					<Link to='/'>SharedPlaces</Link>
-				</Title>
+				<animated.div style={fade}>
+					<Title>
+						<Link to='/'>SharedPlaces</Link>
+					</Title>
+				</animated.div>
 				<Nav>
 					<NavLinks />
 				</Nav>
