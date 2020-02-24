@@ -24,7 +24,7 @@ const UsersList = (props) => {
 					location={user.location}
 					image={user.image}
 					name={user.name}
-					placeCount={user.places}
+					placeCount={user.places.length}
 				/>
 			))}
 		</ListOfUsers>
