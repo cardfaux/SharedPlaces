@@ -84,7 +84,7 @@ const Auth = ({ className }) => {
 						'Content-Type': 'application/json'
 					}
 				);
-				auth.login(responseData.user.id);
+				auth.login(responseData.userId, responseData.token);
 				addToast('Authenticated Successfully!', {
 					appearance: 'success',
 					autoDismiss: true,
@@ -104,7 +104,7 @@ const Auth = ({ className }) => {
 					formData
 				);
 
-				auth.login(responseData.user.id);
+				auth.login(responseData.userId, responseData.token);
 
 				addToast('Authenticated Successfully!', {
 					appearance: 'success',
