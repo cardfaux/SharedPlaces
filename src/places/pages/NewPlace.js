@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
 import { useToasts } from 'react-toast-notifications';
 
@@ -9,11 +9,15 @@ import {
 	VALIDATOR_MINLENGTH
 } from '../../shared/util/validators';
 import { useForm } from '../../shared/hooks/form-hook';
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
 
 import { White } from '../../Styles/Colors';
 import { BoxShadow2 } from '../../Styles/Shadows';
 
 const NewPlace = ({ className }) => {
+	const auth = useContext(AuthContext);
+	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 	const [formState, inputHandler] = useForm(
 		{
 			title: {
@@ -34,14 +38,26 @@ const NewPlace = ({ className }) => {
 
 	const { addToast } = useToasts();
 
-	const placeSubmitHandler = (event) => {
+	const placeSubmitHandler = async (event) => {
 		event.preventDefault();
-		console.log(formState.inputs); // send this to the backend!
-		addToast('Place Added Successfully', {
-			appearance: 'success',
-			autoDismiss: true,
-			autoDismissTimeout: 3000
-		});
+
+		try {
+			await sendRequest(
+				'http://localhost:5000/api/places',
+				'POST',
+				JSON.stringify({
+					title: formState.inputs.title.value,
+					description: formState.inputs.description.value,
+					address: formState.inputs.address.value,
+					creator: auth.userId
+				})
+			);
+			addToast('Place Added Successfully', {
+				appearance: 'success',
+				autoDismiss: true,
+				autoDismissTimeout: 3000
+			});
+		} catch (err) {}
 	};
 
 	return (
