@@ -15,7 +15,10 @@ const UserItem = (props) => {
 			<UserCard>
 				<UserPlacesLink className='user-item' to={`/${props.id}/places`}>
 					<AvatarDiv>
-						<Avatar image={props.image} alt={props.name} />
+						<Avatar
+							image={`http://localhost:5000/${props.image}`}
+							alt={props.name}
+						/>
 					</AvatarDiv>
 					<UserInfoDiv>
 						<h2>{props.name}</h2>
