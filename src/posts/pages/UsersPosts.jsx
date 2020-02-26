@@ -1,30 +1,47 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import PostsList from '../components/PostsList';
-
-export const DUMMY_POSTS = [
-	{
-		id: '1937',
-		title: 'First Test Post',
-		date: '02-22-2020',
-		name: 'James Hagood',
-		post:
-			'Normcore pop-up pok pok blue bottle ennui etsy. Pok pok PBR&B art party beard sustainable swag. Jean shorts gochujang humblebrag irony pok pok pinterest food truck cornhole aesthetic. Fixie adaptogen four loko sriracha pour-over. Brooklyn pabst austin, edison bulb umami post-ironic knausgaard marfa raw denim wolf waistcoat four loko. Hexagon art party plaid master cleanse. Health goth 3 wolf moon kombucha, kogi church-key unicorn live-edge cred fam roof party iPhone everyday carry vice.',
-		creator: 'u1'
-	},
-	{
-		id: '0271',
-		title: 'Second Test Post',
-		date: '02-22-2020',
-		name: 'Amanda Brakefield',
-		post:
-			'Normcore pop-up pok pok blue bottle ennui etsy. Pok pok PBR&B art party beard sustainable swag. Jean shorts gochujang humblebrag irony pok pok pinterest food truck cornhole aesthetic. Fixie adaptogen four loko sriracha pour-over. Brooklyn pabst austin, edison bulb umami post-ironic knausgaard marfa raw denim wolf waistcoat four loko. Hexagon art party plaid master cleanse. Health goth 3 wolf moon kombucha, kogi church-key unicorn live-edge cred fam roof party iPhone everyday carry vice.',
-		creator: 'u2'
-	}
-];
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+import { useHttpClient } from '../../shared/hooks/http-hook';
 
 const UsersPosts = () => {
-	return <PostsList items={DUMMY_POSTS} />;
+	const [loadedPosts, setLoadedPosts] = useState();
+	const { isLoading, error, sendRequest, clearError } = useHttpClient();
+
+	//const userId = useParams().userId;
+
+	useEffect(() => {
+		const fetchPlaces = async () => {
+			try {
+				const responseData = await sendRequest(
+					`http://localhost:5000/api/posts`
+				);
+				setLoadedPosts(responseData.posts);
+			} catch (err) {}
+		};
+		fetchPlaces();
+	}, [sendRequest]);
+
+	const postDeletedHandler = (deletedPostId) => {
+		setLoadedPosts((prevPosts) =>
+			prevPosts.filter((post) => post.id !== deletedPostId)
+		);
+	};
+
+	return (
+		<React.Fragment>
+			<ErrorModal error={error} onClear={clearError} />
+			{isLoading && (
+				<div className='center'>
+					<LoadingSpinner />
+				</div>
+			)}
+			{!isLoading && loadedPosts && (
+				<PostsList items={loadedPosts} onDeletePost={postDeletedHandler} />
+			)}
+		</React.Fragment>
+	);
 };
 
 export default UsersPosts;

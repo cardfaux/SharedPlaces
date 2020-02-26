@@ -1,13 +1,12 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
+// import React from 'react';
+// import { useParams } from 'react-router-dom';
 
-import { DUMMY_POSTS } from './UsersPosts';
-import PostsList from '../components/PostsList';
+// import PostsList from '../components/PostsList';
 
-const UserPost = () => {
-	const postId = useParams().postId;
-	const loadedPosts = DUMMY_POSTS.filter((post) => post.id === postId);
-	return <PostsList items={loadedPosts} />;
-};
+// const UserPost = () => {
+// 	const postId = useParams().postId;
+// 	const loadedPosts = DUMMY_POSTS.filter((post) => post.id === postId);
+// 	return <PostsList items={loadedPosts} />;
+// };
 
-export default UserPost;
+// export default UserPost;
