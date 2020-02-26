@@ -2,7 +2,10 @@ import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
 
-import { AuthContext } from '.././../shared/context/auth-context';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
+import { AuthContext } from '../../shared/context/auth-context';
+import { useHttpClient } from '../../shared/hooks/http-hook';
 import Button from '../../shared/components/FormElements/Button';
 import Modal from '../../shared/components/UIElements/Modal';
 import {
@@ -13,6 +16,7 @@ import {
 } from './PostItem.styles';
 
 const PostItem = (props) => {
+	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 	const [showConfirmModal, setShowConfirmModal] = useState(false);
 
 	const fade = useSpring({
@@ -46,13 +50,25 @@ const PostItem = (props) => {
 		setShowConfirmModal(false);
 	};
 
-	const confirmDeleteHandler = () => {
+	const confirmDeleteHandler = async () => {
 		setShowConfirmModal(false);
-		console.log('DELETING...');
+
+		try {
+			await sendRequest(
+				`http://localhost:5000/api/posts/${props.id}`,
+				'DELETE',
+				null,
+				{
+					Authorization: 'Bearer ' + auth.token
+				}
+			);
+			props.onDelete(props.id);
+		} catch (err) {}
 	};
 
 	return (
 		<React.Fragment>
+			<ErrorModal error={error} onClear={clearError} />
 			<Modal
 				show={showConfirmModal}
 				onCancel={cancelDeleteHandler}
@@ -77,6 +93,7 @@ const PostItem = (props) => {
 			<animated.div style={fade}>
 				<StyledList>
 					<StyledCard>
+						{isLoading && <LoadingSpinner asOverlay />}
 						<header>
 							<h1>{props.title}</h1>
 						</header>
@@ -101,10 +118,10 @@ const PostItem = (props) => {
 									View Post
 								</Button>
 							)}
-							{auth.isLoggedIn && userId && (
+							{auth.userId === props.creatorId && (
 								<Button to={`/posts/${props.id}`}>EDIT</Button>
 							)}
-							{auth.isLoggedIn && userId && (
+							{auth.userId === props.creatorId && (
 								<Button danger onClick={showDeleteWarningHandler}>
 									Delete
 								</Button>
