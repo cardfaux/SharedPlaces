@@ -43,16 +43,12 @@ const NewPost = ({ className }) => {
 		event.preventDefault();
 
 		try {
-			// const formData = new FormData();
-			// formData.append('title', formState.inputs.title.value);
-			// formData.append('description', formState.inputs.description.value);
 			await sendRequest(
 				'http://localhost:5000/api/posts',
 				'POST',
 				JSON.stringify({
 					title: formState.inputs.title.value,
-					description: formState.inputs.description.value,
-					creator: auth.userId
+					description: formState.inputs.description.value
 				}),
 				{
 					'Content-Type': 'application/json',
