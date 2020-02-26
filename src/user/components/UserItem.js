@@ -27,6 +27,10 @@ const UserItem = (props) => {
 							Shared: {props.placeCount}{' '}
 							{props.placeCount === 1 ? 'Place' : 'Places'}
 						</h3>
+						<h3>
+							Posts: {props.postCount}{' '}
+							{props.postCount === 1 ? 'Post' : 'Posts'}
+						</h3>
 					</UserInfoDiv>
 				</UserPlacesLink>
 			</UserCard>

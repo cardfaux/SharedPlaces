@@ -25,6 +25,7 @@ const UsersList = (props) => {
 					image={user.image}
 					name={user.name}
 					placeCount={user.places.length}
+					postCount={user.posts.length}
 				/>
 			))}
 		</ListOfUsers>
