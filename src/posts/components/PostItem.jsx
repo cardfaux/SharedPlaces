@@ -40,7 +40,7 @@ const PostItem = (props) => {
 	};
 	const auth = useContext(AuthContext);
 	const postId = useParams().postId;
-	const userId = useParams().userId;
+	//const userId = useParams().userId;
 
 	const showDeleteWarningHandler = () => {
 		setShowConfirmModal(true);
@@ -114,7 +114,7 @@ const PostItem = (props) => {
 									All Posts
 								</Button>
 							) : (
-								<Button to={`/posts/${props.id}/${props.creatorId}`} inverse>
+								<Button to={`/posts/${props.id}`} inverse>
 									View Post
 								</Button>
 							)}
