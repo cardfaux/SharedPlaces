@@ -11,7 +11,7 @@ const NavLinks = (props) => {
 		<Navigation>
 			<ListItem>
 				<a href='!#'>
-					{auth.isLoggedIn ? `HELLO ${auth.userName}` : 'Hello Guest'}
+					{auth.isLoggedIn ? `Hello ${auth.userName}` : 'Hello Guest'}
 				</a>
 			</ListItem>
 			<ListItem>
