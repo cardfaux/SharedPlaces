@@ -31,4 +31,5 @@ export const ModalContent = styled.div`
 
 export const ModalFooter = styled.footer`
 	padding: 1rem 0.5rem;
+	margin: 1rem;
 `;

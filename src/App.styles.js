@@ -69,6 +69,7 @@ export const GlobalStyle = createGlobalStyle`
 }
 
 .place-item__modal-actions {
+	margin-bottom: 1rem;
   text-align: right;
 }
 `;
