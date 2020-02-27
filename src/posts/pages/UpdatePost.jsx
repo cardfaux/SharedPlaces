@@ -129,7 +129,7 @@ const UpdatePost = ({ className }) => {
 						initialValid={true}
 					/>
 					<Input
-						id='post'
+						id='description'
 						element='textarea'
 						rows='10'
 						label='Post'
