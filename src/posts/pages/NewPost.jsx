@@ -82,6 +82,7 @@ const NewPost = ({ className }) => {
 					id='description'
 					element='textarea'
 					label='Description'
+					rows='10'
 					validators={[VALIDATOR_MINLENGTH(10)]}
 					errorText='Please enter a valid post (at least 10 characters).'
 					onInput={inputHandler}

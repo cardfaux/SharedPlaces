@@ -1,12 +1,25 @@
 import React from 'react';
 
+import { StyledCard, StyledList, StyledFooter } from './PostItem.styles';
+import Button from '../../shared/components/FormElements/Button';
+
 const SinglePost = (props) => {
 	console.log(props.items);
+
 	return (
-		<div>
-			<h1>{props.items.title}</h1>
-			<h1>{props.items.description}</h1>
-		</div>
+		<StyledList style={{ maxWidth: '40rem', margin: '1rem auto' }}>
+			<StyledCard>
+				<header>
+					<h1>{props.items.title}</h1>
+				</header>
+				<h4>{props.items.description}</h4>
+				<StyledFooter>
+					<Button inverse to='/posts'>
+						All Posts
+					</Button>
+				</StyledFooter>
+			</StyledCard>
+		</StyledList>
 	);
 };
 
