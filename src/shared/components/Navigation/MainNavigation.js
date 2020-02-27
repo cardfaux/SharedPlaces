@@ -8,7 +8,7 @@ import SideDrawer from './SideDrawer';
 import Backdrop from '../UIElements/Backdrop';
 import { Hamburger, Title, Nav, DrawerNav } from './MainNavigation.styles.js';
 
-const MainNavigation = (props) => {
+const MainNavigation = () => {
 	const fade = useSpring({
 		from: {
 			opacity: 0
