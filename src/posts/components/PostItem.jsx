@@ -9,12 +9,14 @@ import { AuthContext } from '../../shared/context/auth-context';
 import { useHttpClient } from '../../shared/hooks/http-hook';
 import Button from '../../shared/components/FormElements/Button';
 import Modal from '../../shared/components/UIElements/Modal';
+import Avatar from '../../shared/components/UIElements/Avatar';
 import {
 	StyledCard,
 	StyledList,
 	StyledDate,
 	StyledFooter
 } from './PostItem.styles';
+import { AvatarDiv } from '../../user/components/UserItem.styles';
 
 const PostItem = (props) => {
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -97,6 +99,15 @@ const PostItem = (props) => {
 						{isLoading && <LoadingSpinner asOverlay />}
 						<header>
 							<h1>{props.title}</h1>
+							{props.avatar && (
+								<AvatarDiv>
+									<Avatar
+										image={`http://localhost:5000/${props.avatar}`}
+										alt={props.name}
+									/>
+								</AvatarDiv>
+							)}
+							{/* <h1>{props.title}</h1> */}
 						</header>
 						<Moment format='MM/DD/YYYY'>
 							<StyledDate>{props.postedDate}</StyledDate>
@@ -107,9 +118,9 @@ const PostItem = (props) => {
 							) : (
 								<h4>{shortText(props.description, 300)}</h4>
 							)}
-							{/* <h4>
-								<span>Posted By:</span> {auth.userName}
-							</h4> */}
+							<h4>
+								<span>Posted By:</span> {props.name}
+							</h4>
 						</div>
 						<StyledFooter>
 							{postId ? (

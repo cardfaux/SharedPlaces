@@ -24,6 +24,7 @@ const PostsList = (props) => {
 				return (
 					<PostItem
 						name={post.name}
+						avatar={post.avatar}
 						key={post.id}
 						id={post.id}
 						title={post.title}
