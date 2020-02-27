@@ -73,14 +73,14 @@ export default styled(ImageUpload)`
 	}
 
 	.image-upload__preview {
-		width: 13rem;
-		height: 13rem;
+		width: 5rem;
+		height: 5rem;
 		border: 1px solid #ccc;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		text-align: center;
-		margin-bottom: 1rem;
+		margin-bottom: 0.5rem;
 	}
 
 	.image-upload__preview img {

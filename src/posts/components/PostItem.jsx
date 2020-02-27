@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSpring, animated } from 'react-spring';
+import Moment from 'react-moment';
 
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
 import ErrorModal from '../../shared/components/UIElements/ErrorModal';
@@ -97,7 +98,9 @@ const PostItem = (props) => {
 						<header>
 							<h1>{props.title}</h1>
 						</header>
-						<StyledDate>{props.postedDate}</StyledDate>
+						<Moment format='MM/DD/YYYY'>
+							<StyledDate>{props.postedDate}</StyledDate>
+						</Moment>
 						<div>
 							{postId ? (
 								<h4>{props.description}</h4>
@@ -105,7 +108,7 @@ const PostItem = (props) => {
 								<h4>{shortText(props.description, 300)}</h4>
 							)}
 							{/* <h4>
-								<span>Posted By:</span> {props.creatorId}
+								<span>Posted By:</span> {auth.userName}
 							</h4> */}
 						</div>
 						<StyledFooter>

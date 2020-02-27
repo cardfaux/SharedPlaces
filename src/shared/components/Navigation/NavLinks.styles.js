@@ -17,6 +17,8 @@ export const Navigation = styled.ul`
 	}
 `;
 
+export const StyledLink = styled.li``;
+
 export const ListItem = styled.li`
 	margin: 1rem;
 	> a {

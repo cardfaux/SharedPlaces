@@ -22,7 +22,7 @@ import { useAuth } from './shared/hooks/auth-hook';
 import { Main, GlobalStyle } from './App.styles';
 
 const App = () => {
-	const { token, login, logout, userId } = useAuth();
+	const { token, login, logout, userId, userName } = useAuth();
 
 	let routes;
 
@@ -82,6 +82,7 @@ const App = () => {
 				isLoggedIn: !!token,
 				token: token,
 				userId: userId,
+				userName: userName,
 				login: login,
 				logout: logout
 			}}

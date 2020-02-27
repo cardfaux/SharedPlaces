@@ -10,6 +10,11 @@ const NavLinks = (props) => {
 	return (
 		<Navigation>
 			<ListItem>
+				<a href='!#'>
+					{auth.isLoggedIn ? `HELLO ${auth.userName}` : 'Hello Guest'}
+				</a>
+			</ListItem>
+			<ListItem>
 				<NavLink to='/' exact>
 					ALL USERS
 				</NavLink>
