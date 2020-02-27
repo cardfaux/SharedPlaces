@@ -27,7 +27,7 @@ const PostsList = (props) => {
 						id={post.id}
 						title={post.title}
 						postedDate={post.date}
-						post={post.description}
+						description={post.description}
 						creatorId={post.creator}
 						onDelete={props.onDeletePost}
 					/>

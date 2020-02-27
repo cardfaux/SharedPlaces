@@ -100,9 +100,9 @@ const PostItem = (props) => {
 						<StyledDate>{props.postedDate}</StyledDate>
 						<div>
 							{postId ? (
-								<h4>{props.post}</h4>
+								<h4>{props.description}</h4>
 							) : (
-								<h4>{shortText(props.post, 300)}</h4>
+								<h4>{shortText(props.description, 300)}</h4>
 							)}
 							<h4>
 								<span>Posted By:</span> {props.name}

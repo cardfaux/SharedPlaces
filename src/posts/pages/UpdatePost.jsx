@@ -110,6 +110,7 @@ const UpdatePost = ({ className }) => {
 			</div>
 		);
 	}
+	console.log('LOADED-POST', loadedPost);
 
 	return (
 		<React.Fragment>
