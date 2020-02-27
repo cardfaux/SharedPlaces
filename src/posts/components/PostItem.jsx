@@ -105,7 +105,7 @@ const PostItem = (props) => {
 								<h4>{shortText(props.description, 300)}</h4>
 							)}
 							<h4>
-								<span>Posted By:</span> {props.name}
+								<span>Posted By:</span> {props.creatorId}
 							</h4>
 						</div>
 						<StyledFooter>

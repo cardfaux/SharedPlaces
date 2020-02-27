@@ -4,8 +4,6 @@ import { StyledCard, StyledList, StyledFooter } from './PostItem.styles';
 import Button from '../../shared/components/FormElements/Button';
 
 const SinglePost = (props) => {
-	console.log(props.items);
-
 	return (
 		<StyledList style={{ maxWidth: '40rem', margin: '1rem auto' }}>
 			<StyledCard>

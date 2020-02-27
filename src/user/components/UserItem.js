@@ -22,7 +22,6 @@ const UserItem = (props) => {
 					</AvatarDiv>
 					<UserInfoDiv>
 						<h2>{props.name}</h2>
-						<h3>From: {props.location}</h3>
 						<h3>
 							Shared: {props.placeCount}{' '}
 							{props.placeCount === 1 ? 'Place' : 'Places'}

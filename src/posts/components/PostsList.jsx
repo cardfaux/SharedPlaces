@@ -16,6 +16,7 @@ const PostsList = (props) => {
 			</div>
 		);
 	}
+	console.log(props.items);
 
 	return (
 		<ul className={props.className}>
