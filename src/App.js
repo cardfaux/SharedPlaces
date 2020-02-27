@@ -50,7 +50,7 @@ const App = () => {
 				<Route path='/places/:placeId'>
 					<UpdatePlace />
 				</Route>
-				<Route path='/posts/:postId'>
+				<Route path='/posts/edit/:postId'>
 					<UpdatePost />
 				</Route>
 				<Redirect to='/' />

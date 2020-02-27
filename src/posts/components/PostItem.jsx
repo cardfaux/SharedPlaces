@@ -119,7 +119,7 @@ const PostItem = (props) => {
 								</Button>
 							)}
 							{auth.userId === props.creatorId && (
-								<Button to={`/posts/${props.id}`}>EDIT</Button>
+								<Button to={`/posts/edit/${props.id}`}>EDIT</Button>
 							)}
 							{auth.userId === props.creatorId && (
 								<Button danger onClick={showDeleteWarningHandler}>

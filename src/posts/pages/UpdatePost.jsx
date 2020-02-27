@@ -1,44 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import styled from 'styled-components';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import { useToasts } from 'react-toast-notifications';
 
 import Input from '../../shared/components/FormElements/Input';
 import Button from '../../shared/components/FormElements/Button';
 import Card from '../../shared/components/UIElements/Card';
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner';
+import ErrorModal from '../../shared/components/UIElements/ErrorModal';
 import {
 	VALIDATOR_REQUIRE,
 	VALIDATOR_MINLENGTH
 } from '../../shared/util/validators';
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
 import { useForm } from '../../shared/hooks/form-hook';
 
 import { White } from '../../Styles/Colors';
 import { BoxShadow2 } from '../../Styles/Shadows';
 
-const DUMMY_POSTS = [
-	{
-		id: '1937',
-		title: 'First Test Post',
-		date: '02-22-2020',
-		name: 'James Hagood',
-		post:
-			'Normcore pop-up pok pok blue bottle ennui etsy. Pok pok PBR&B art party beard sustainable swag. Jean shorts gochujang humblebrag irony pok pok pinterest food truck cornhole aesthetic. Fixie adaptogen four loko sriracha pour-over. Brooklyn pabst austin, edison bulb umami post-ironic knausgaard marfa raw denim wolf waistcoat four loko. Hexagon art party plaid master cleanse. Health goth 3 wolf moon kombucha, kogi church-key unicorn live-edge cred fam roof party iPhone everyday carry vice.',
-		creator: 'u1'
-	},
-	{
-		id: '0271',
-		title: 'Second Test Post',
-		date: '02-22-2020',
-		name: 'Amanda Brakefield',
-		post:
-			'Normcore pop-up pok pok blue bottle ennui etsy. Pok pok PBR&B art party beard sustainable swag. Jean shorts gochujang humblebrag irony pok pok pinterest food truck cornhole aesthetic. Fixie adaptogen four loko sriracha pour-over. Brooklyn pabst austin, edison bulb umami post-ironic knausgaard marfa raw denim wolf waistcoat four loko. Hexagon art party plaid master cleanse. Health goth 3 wolf moon kombucha, kogi church-key unicorn live-edge cred fam roof party iPhone everyday carry vice.',
-		creator: 'u2'
-	}
-];
+const UpdatePost = ({ className }) => {
+	const auth = useContext(AuthContext);
+	const { isLoading, error, sendRequest, clearError } = useHttpClient();
+	const [loadedPost, setLoadedPost] = useState();
 
-const UpdatePlace = ({ className }) => {
-	const [isLoading, setIsLoading] = useState(true);
 	const postId = useParams().postId;
+	const history = useHistory();
 
 	const { addToast } = useToasts();
 
@@ -48,7 +35,7 @@ const UpdatePlace = ({ className }) => {
 				value: '',
 				isValid: false
 			},
-			post: {
+			description: {
 				value: '',
 				isValid: false
 			}
@@ -56,30 +43,49 @@ const UpdatePlace = ({ className }) => {
 		false
 	);
 
-	const identifiedPost = DUMMY_POSTS.find((p) => p.id === postId);
-
 	useEffect(() => {
-		if (identifiedPost) {
-			setFormData(
-				{
-					title: {
-						value: identifiedPost.title,
-						isValid: true
+		const fetchPost = async () => {
+			try {
+				const responseData = await sendRequest(
+					`http://localhost:5000/api/posts/${postId}`
+				);
+				setLoadedPost(responseData.post);
+				setFormData(
+					{
+						title: {
+							value: responseData.post.title,
+							isValid: true
+						},
+						description: {
+							value: responseData.post.description,
+							isValid: true
+						}
 					},
-					post: {
-						value: identifiedPost.post,
-						isValid: true
-					}
-				},
-				true
-			);
-		}
-		setIsLoading(false);
-	}, [setFormData, identifiedPost]);
+					true
+				);
+			} catch (err) {}
+		};
+		fetchPost();
+	}, [sendRequest, postId, setFormData]);
 
-	const postUpdateSubmitHandler = (event) => {
+	const postUpdateSubmitHandler = async (event) => {
 		event.preventDefault();
-		console.log(formState.inputs);
+		try {
+			await sendRequest(
+				`http://localhost:5000/api/posts/edit/${postId}`,
+				'PATCH',
+				JSON.stringify({
+					title: formState.inputs.title.value,
+					description: formState.inputs.description.value
+				}),
+				{
+					'Content-Type': 'application/json',
+					Authorization: 'Bearer ' + auth.token
+				}
+			);
+			history.push('/posts');
+		} catch (err) {}
+
 		addToast('Post Updated Successfully', {
 			appearance: 'success',
 			autoDismiss: true,
@@ -87,7 +93,15 @@ const UpdatePlace = ({ className }) => {
 		});
 	};
 
-	if (!identifiedPost) {
+	if (isLoading) {
+		return (
+			<div className='center'>
+				<LoadingSpinner />
+			</div>
+		);
+	}
+
+	if (!loadedPost && !error) {
 		return (
 			<div className='center'>
 				<Card>
@@ -97,46 +111,43 @@ const UpdatePlace = ({ className }) => {
 		);
 	}
 
-	if (isLoading) {
-		return (
-			<div className='center'>
-				<h2>Loading...</h2>
-			</div>
-		);
-	}
-
 	return (
-		<form className={className} onSubmit={postUpdateSubmitHandler}>
-			<Input
-				id='title'
-				element='input'
-				type='text'
-				label='Title'
-				validators={[VALIDATOR_REQUIRE()]}
-				errorText='Please enter a valid title.'
-				onInput={inputHandler}
-				initialValue={formState.inputs.title.value}
-				initialValid={formState.inputs.title.isValid}
-			/>
-			<Input
-				id='post'
-				element='textarea'
-				rows='10'
-				label='Post'
-				validators={[VALIDATOR_MINLENGTH(5)]}
-				errorText='Please enter a valid post (min. 5 characters).'
-				onInput={inputHandler}
-				initialValue={formState.inputs.post.value}
-				initialValid={formState.inputs.post.isValid}
-			/>
-			<Button type='submit' disabled={!formState.isValid}>
-				UPDATE POST
-			</Button>
-		</form>
+		<React.Fragment>
+			<ErrorModal error={error} onClear={clearError} />
+			{!isLoading && loadedPost && (
+				<form className={className} onSubmit={postUpdateSubmitHandler}>
+					<Input
+						id='title'
+						element='input'
+						type='text'
+						label='Title'
+						validators={[VALIDATOR_REQUIRE()]}
+						errorText='Please enter a valid title.'
+						onInput={inputHandler}
+						initialValue={loadedPost.title}
+						initialValid={true}
+					/>
+					<Input
+						id='post'
+						element='textarea'
+						rows='10'
+						label='Post'
+						validators={[VALIDATOR_MINLENGTH(10)]}
+						errorText='Please enter a valid post (min. 10 characters).'
+						onInput={inputHandler}
+						initialValue={loadedPost.description}
+						initialValid={true}
+					/>
+					<Button type='submit' disabled={!formState.isValid}>
+						UPDATE POST
+					</Button>
+				</form>
+			)}
+		</React.Fragment>
 	);
 };
 
-export default styled(UpdatePlace)`
+export default styled(UpdatePost)`
 	list-style: none;
 	margin: 0 auto;
 	padding: 1rem;
