@@ -107,7 +107,11 @@ const NewPlace = ({ className }) => {
 					onInput={inputHandler}
 					errorText='Please Provide An Image'
 				/>
-				<Button type='submit' disabled={!formState.isValid}>
+				<Button
+					style={{ margin: '1rem' }}
+					type='submit'
+					disabled={!formState.isValid}
+				>
 					ADD PLACE
 				</Button>
 			</form>
