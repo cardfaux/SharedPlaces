@@ -58,7 +58,7 @@ const PostItem = (props) => {
 
 		try {
 			await sendRequest(
-				`http://localhost:5000/api/posts/${props.id}`,
+				`${process.env.REACT_APP_BACKEND_URL}/posts/${props.id}`,
 				'DELETE',
 				null,
 				{
@@ -102,7 +102,7 @@ const PostItem = (props) => {
 							{props.avatar && (
 								<AvatarDiv>
 									<Avatar
-										image={`http://localhost:5000/${props.avatar}`}
+										image={`${process.env.REACT_APP_ASSET_URL}/${props.avatar}`}
 										alt={props.name}
 									/>
 								</AvatarDiv>

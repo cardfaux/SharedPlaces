@@ -19,7 +19,7 @@ const UserPost = (props) => {
 		const fetchPost = async () => {
 			try {
 				const responseData = await sendRequest(
-					`http://localhost:5000/api/posts/${postId}`
+					`${process.env.REACT_APP_BACKEND_URL}/posts/${postId}`
 				);
 				setLoadedPost(responseData.post);
 			} catch (err) {}
