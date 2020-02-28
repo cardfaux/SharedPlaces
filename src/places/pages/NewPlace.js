@@ -23,6 +23,7 @@ const NewPlace = ({ className }) => {
 	const auth = useContext(AuthContext);
 	const { isLoading, error, sendRequest, clearError } = useHttpClient();
 	const [formState, inputHandler] = useForm(
+		// Initial Inputs For The useForm Hook
 		{
 			title: {
 				value: '',
@@ -41,6 +42,7 @@ const NewPlace = ({ className }) => {
 				isValid: false
 			}
 		},
+		// Initial Form Validity
 		false
 	);
 
@@ -48,6 +50,7 @@ const NewPlace = ({ className }) => {
 
 	const { addToast } = useToasts();
 
+	// Submit Form To The Backend
 	const placeSubmitHandler = async (event) => {
 		event.preventDefault();
 
